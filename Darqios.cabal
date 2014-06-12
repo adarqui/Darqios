@@ -1,6 +1,6 @@
 name:                Darqios
 version:             0.1.0.0
-synopsis:            MySQL helpers
+synopsis:            Darqios - haskell variant
 homepage:            https://github.com/adarqui/Darqios
 license:             GPL-3
 license-file:        LICENSE
