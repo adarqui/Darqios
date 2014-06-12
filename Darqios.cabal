@@ -1,0 +1,45 @@
+name:                Darqios
+version:             0.1.0.0
+synopsis:            MySQL helpers
+homepage:            https://github.com/adarqui/Darqios
+license:             GPL-3
+license-file:        LICENSE
+author:              adarqui
+maintainer:          andrew.darqui@gmail.com
+category:            Darqios
+build-type:          Simple
+cabal-version:       >=1.8
+
+library
+  exposed-modules:
+   Darqios
+  build-depends:
+   base ==4.7.*,
+   HUnit ==1.2.5.*,
+   bytestring ==0.10.4.0,
+   hedis ==0.6.5,
+   mysql-simple ==0.2.2.3,
+   DevUtils-Base,
+   DevUtils-Sys,
+   DevUtils-Parser,
+   DevUtils-Redis,
+   DevUtils-MySQL
+  GHC-Options:         -Wall -rtsopts
+  hs-source-dirs:      src
+
+executable "simple"
+  main-is:             simple.hs
+  build-depends:
+   base ==4.7.*,
+   HUnit ==1.2.5.*,
+   bytestring ==0.10.4.0,
+   hedis ==0.6.5,
+   mysql-simple ==0.2.2.3,
+   DevUtils-Base,
+   DevUtils-Sys,
+   DevUtils-Parser,
+   DevUtils-Redis,
+   DevUtils-MySQL,
+   Darqios
+  GHC-Options:         -O3 -Wall -rtsopts
+  hs-source-dirs:      examples
