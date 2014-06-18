@@ -13,6 +13,7 @@ cabal-version:       >=1.8
 library
   exposed-modules:
    Darqios
+   Darqios.Actions
   build-depends:
    base ==4.7.*,
    HUnit ==1.2.5.*,
