@@ -42,5 +42,17 @@ executable "simple"
    DevUtils-Redis,
    DevUtils-MySQL,
    Darqios
-  GHC-Options:         -O3 -Wall -rtsopts
+  GHC-Options:         -O2 -Wall -rtsopts
   hs-source-dirs:      examples
+
+executable "mysql-alert-processlist"
+  main-is:             mysql-alert-processlist.hs
+  build-depends:
+   base ==4.7.*,
+   bytestring ==0.10.4.0,
+   mysql-simple ==0.2.2.3,
+   DevUtils-Base,
+   DevUtils-Parser,
+   DevUtils-MySQL
+  GHC-Options:         -O2 -Wall -rtsopts
+  hs-source-dirs:      experimental/scripts/
