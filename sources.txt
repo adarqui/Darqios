@@ -5,3 +5,4 @@ https://github.com/adarqui/DevUtils-Parser
 https://github.com/adarqui/DevUtils-Redis
 https://github.com/adarqui/DevUtils-MySQL
 https://github.com/adarqui/cron
+https://github.com/adarqui/uberlog-hs

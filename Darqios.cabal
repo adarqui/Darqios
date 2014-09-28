@@ -56,3 +56,20 @@ executable "mysql-alert-processlist"
    DevUtils-MySQL
   GHC-Options:         -O2 -Wall -rtsopts
   hs-source-dirs:      experimental/scripts/
+
+executable "health"
+  main-is:             health.hs
+  build-depends:
+   base ==4.7.*,
+   bytestring ==0.10.4.0,
+   aeson,
+   text,
+   mysql-simple ==0.2.2.3,
+   hedis,
+   DevUtils-Base,
+   DevUtils-Parser,
+   DevUtils-MySQL,
+   DevUtils-Redis,
+   UberLog-Hs
+  GHC-Options:         -O2 -Wall -rtsopts
+  hs-source-dirs:      experimental/scripts/
