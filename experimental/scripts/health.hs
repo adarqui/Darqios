@@ -52,13 +52,15 @@ instance Aeson.ToJSON (Wrapper R.Info)
 instance Aeson.FromJSON (Wrapper R.CommandStats)
 instance Aeson.ToJSON (Wrapper R.CommandStats)
 
+instance Aeson.FromJSON (Wrapper Aeson.Value)
+instance Aeson.ToJSON (Wrapper Aeson.Value)
+
 main :: IO ()
 main = do
  argv <- getArgs
  case argv of
   (url'ub:rest) -> do
    let urls = rights $ map (\url -> runCmd url) rest
-   mapM_ print urls
    mapM_ (\url -> health url'ub url) urls
   _ -> error usage
 
@@ -71,12 +73,11 @@ health url'ub url = do
 health'Redis url'ub url = do
  r <- R.connect $ R.urlToConnectInfo url
  (Just inf) <- R.run'info r 
- print $ show inf
- ulog'inf <- Uber.new Uber.defaultUrl "ns" "cat" "info" []
+ ulog'inf <- Uber.new Uber.defaultUrl "health" "redis" "info" []
  Uber.info (BS.concat $ BSL.toChunks (Aeson.encode (mk'Wrapper dest inf))) [] ulog'inf
  (Just cs) <- R.run'commandStats'List r
- ulog'cs <- Uber.new Uber.defaultUrl "ns" "cat" "commandstats" []
- Uber.info (BS.concat $ BSL.toChunks (Aeson.encode (mk'Wrapper dest cs))) [] ulog'cs
+ ulog'cs <- Uber.new Uber.defaultUrl "health" "redis" "commandstats" []
+ Uber.info (BS.concat $ BSL.toChunks (Aeson.encode (mk'Wrapper dest (R.unMarshall'Value cs)))) [] ulog'cs
  return ()
  where
   dest = _dest (_con (R._ses url))
