@@ -49,6 +49,9 @@ data Wrapper a = Wrapper {
 instance Aeson.FromJSON (Wrapper R.Info)
 instance Aeson.ToJSON (Wrapper R.Info)
 
+instance Aeson.FromJSON (Wrapper R.Keyspace)
+instance Aeson.ToJSON (Wrapper R.Keyspace)
+
 instance Aeson.FromJSON (Wrapper R.CommandStats)
 instance Aeson.ToJSON (Wrapper R.CommandStats)
 
@@ -75,9 +78,11 @@ health'Redis url'ub url = do
  (Just inf) <- R.run'info r 
  ulog'inf <- Uber.new Uber.defaultUrl "health" "redis" "info" []
  Uber.info (BS.concat $ BSL.toChunks (Aeson.encode (mk'Wrapper dest inf))) [] ulog'inf
+ ulog'db <- Uber.new Uber.defaultUrl "health" "redis" "databases" []
+ Uber.info (BS.concat $ BSL.toChunks (Aeson.encode (mk'Wrapper dest $ R.keyspaces'toJSON (R._databases $ R._keyspaces inf)))) [] ulog'db
  (Just cs) <- R.run'commandStats'List r
  ulog'cs <- Uber.new Uber.defaultUrl "health" "redis" "commandstats" []
- Uber.info (BS.concat $ BSL.toChunks (Aeson.encode (mk'Wrapper dest (R.unMarshall'Value cs)))) [] ulog'cs
+ Uber.info (BS.concat $ BSL.toChunks (Aeson.encode (mk'Wrapper dest (R.cs'toJSON cs)))) [] ulog'cs
  return ()
  where
   dest = _dest (_con (R._ses url))
